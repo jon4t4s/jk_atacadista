@@ -15,7 +15,7 @@
     <!-- Responsive navbar-->
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:  #ff0000;">
         <div class="container px-5">
-            <a class="navbar-brand" href="{% url 'home' %}">Diário de Notas</a>
+            <a class="navbar-brand" href="{% url 'home' %}">Lista de compras</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -46,34 +46,29 @@
             <div class="col-md-4 mb-5">
                 <div class="card h-100" style="background-color: #D3D3D3;">
                     <div class="card-body" style="background-color: #FFFFFF;">
-                        <h2 class="card-title">Lançar Notas</h2>
-                        <p class="card-text">Nesta opção você poderá lancar todas as notas referentes ás sua
-                            desciplinas, discriminando todas os respectivos detalhes.</p>
+                        <h2 class="card-title">Cadatrar lista</h2>
+                        <p class="card-text">Nesta opção você poderá criar lista de compras do seu mês.</p>
                     </div>
-                    <div class="card-footer"><a class="btn btn-primary btn-sm" href="{% url 'lancar' %}">Clique aqui</a>
+                    <div class="card-footer"><a class="btn btn-primary btn-sm" href="{% url 'lancar' %}">Cadastrar</a>
                     </div>
                 </div>
             </div>
             <div class="col-md-4 mb-5">
                 <div class="card h-100" style="background-color: #D3D3D3;">
                     <div class="card-body" style="background-color: #FFFFFF;">
-                        <h2 class="card-title">Alterar Notas</h2>
-                        <p class="card-text">Nesta opção você poderá alterar todas as notas já lançados referentes às
-                            suas disciplinas, inclusive excluir alguma nota.</p>
+                        <h2 class="card-title">Editar lista</h2>
+                        <p class="card-text">Nesta opção você poderá editar sua lista de compras.</p>
                     </div>
-                    <div class="card-footer"><a class="btn btn-primary btn-sm" href="{% url 'alterar' %}">Clique
-                            aqui</a></div>
+                    <div class="card-footer"><a class="btn btn-primary btn-sm" href="{% url 'alterar' %}">Editar</a></div>
                 </div>
             </div>
             <div class="col-md-4 mb-5">
                 <div class="card h-100" style="background-color: #D3D3D3;">
                     <div class="card-body" style="background-color: #FFFFFF;">
-                        <h2 class="card-title">Visualizar Notas</h2>
-                        <p class="card-text">Nesta opção você poderá visualizar todas as notas já lançadas referentes às
-                            suas disciplinas.</p>
+                        <h2 class="card-title">Visualizar lista</h2>
+                        <p class="card-text">Nesta opção você poderá visualizar todas as suas listas cadastrada.</p>
                     </div>
-                    <div class="card-footer"><a class="btn btn-primary btn-sm" href="{% url 'visualizar' %}">Clique
-                            aqui</a></div>
+                    <div class="card-footer"><a class="btn btn-primary btn-sm" href="{% url 'visualizar' %}">Visulizar</a></div>
                 </div>
             </div>
             {% endblock %}
@@ -82,7 +77,7 @@
     <!-- Footer-->
     <footer class="fixed-bottom" style="background-color: #ff0000;">
         <div class="container px-4 px-lg-5">
-            <p class="m-0 text-center text-white">Copyright &copy; Diário de Notas 2024</p>
+            <p class="m-0 text-center text-white">Copyright &copy; Lista de compras</p>
         </div>
     </footer>
     <!-- Bootstrap core JS-->
