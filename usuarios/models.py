@@ -8,3 +8,4 @@ class Nota(models.Model):
     nota_trabalho = models.IntegerField(default=0)
     nota_prova = models.IntegerField(default=0)
     media = models.IntegerField(blank = True, default=0)#blank true significa que não será preenchido diretamente pelo usuário
+    

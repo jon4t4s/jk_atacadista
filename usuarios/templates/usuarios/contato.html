@@ -1,0 +1,92 @@
+{% extends 'usuarios/base.html' %}
+{% load static %}
+
+{% block aba %}Contato{% endblock %}
+
+{% block titulo %}Formulário para Contato{% endblock %}
+
+
+{% block navbar %}
+<!-- Responsive navbar-->
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color:  #ff0000;">
+    <div class="container px-5">
+        <a class="navbar-brand" href="{% url 'home' %}">JK ATACADISTA</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
+                class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'home' %}">Página Inicial</a>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'sobre' %}">Sobre</a></li>
+                <li class="nav-item"><a class="nav-link active" href="{% url 'contato' %}">Contato</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block conteudo %}
+<style>
+    .custom-hover {
+        transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .custom-hover:hover {
+        background-color: #00b227;
+        /* Cor de fundo ao passar o mouse */
+        transform: scale(1.05);
+        /* Aumenta o botão ao passar o mouse */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        /* Sombra do botão */
+    }
+</style>
+
+
+{% if error_message %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ error_message }}
+</div>
+{% endif %}
+
+
+<div class="container "></div>
+<div class="col-sm-9 col-md-7 col-lg-5 mx-auto ">
+    <div class="card border-0 shadow rounded-3 my-6">
+        <div class="card-body p-0 ">
+            <div class="card-body">
+                {% if messages %}
+                <div class="container mt-3">
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}" role="alert">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <form action="{% url 'contato' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="Name" style="font-weight:bold;">{{ user.first_name }}</label>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" style="font-weight:lighter">E-mail:</label>
+                        <input type="email" class="form-control" id="username" placeholder="Email" name="email"
+                            required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Mensagem" style="font-weight:lighter">Mensagem</label>
+                        <textarea class="form-control" id="mensagem" placeholder="Deixe sua Mensagem"></textarea><br>
+                    </div>
+                    <div class="d-grid">
+                        <button class="btn btn-primary btn-light text-uppercase fw-bold  custom-hover type="
+                            submit">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

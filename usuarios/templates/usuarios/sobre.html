@@ -1,0 +1,97 @@
+{% extends 'usuarios/base.html' %}
+
+{% load static %}
+
+{% block aba %}Sobre{% endblock %}
+{% block navbar %}
+    <!-- Responsive navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:  #ff0000;">
+        <div class="container px-5">
+            <a class="navbar-brand" href="{% url 'home' %}">JK ATACADISTA</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'home' %}">Página Inicial</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{% url 'sobre' %}">Sobre</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'contato' %}">Contato</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+
+{% if error_message %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ error_message }}
+    </div>
+{% endif %}
+
+{% block titulo %}Sobre a JK Atacadista{% endblock %}
+
+{% block conteudo %}
+
+<style>
+    .image-container img:hover {
+        transition: transform 0.3s ease-in-out;
+        transform: translateY(-10px) scale(1.1); /* Efeito de pular e aumentar na imagem */
+    }    
+    .text-justify {
+        text-align: justify;
+    }
+
+    .spaced-bottom {
+        margin-bottom: 50px;
+    }
+</style>
+
+<div class="hero-section">
+    <div class="container">
+        <div class="hero-text ">
+            <h1><div class="mx-auto text-center image-container"><a href="{% url 'home' %}"><img src="{% static 'img/jk_logo.png' %}" alt="Logo" height="300" width="300"></a></div></h1>
+            <!-- About Section -->
+            <div class="container">
+                <div class="container mt-5">
+                    <div id="sobre">
+                        <h2 class="section-title">Nossa História</h2>
+                        <p class="text-justify">Fundada em 2024 por Jônatas e Kléber, jovens desenvolvedores de software com uma visão inovadora,
+                            a JK Atacadista é uma empresa emergente no ramo alimentício. Com a paixão por oferecer produtos
+                            de qualidade e um compromisso inabalável com a excelência, Jônatas e Kléber transformaram suas
+                            habilidades em tecnologia em uma plataforma sólida para o comércio atacadista.</p>
+                        <hr class="my-4">
+            
+                        <h2 class="section-title">Nossa Missão</h2>
+                        <p class="text-justify">Na JK Atacadista, nossa missão é fornecer uma ampla gama de produtos alimentícios com a melhor
+                            qualidade e preço competitivo. Buscamos constantemente novas maneiras de atender às necessidades
+                            de nossos clientes e parceiros comerciais, mantendo sempre um alto padrão de serviço e inovação.
+                        </p>
+            
+                        <hr class="my-4">
+                        <h2 class="section-title">Nossa Sede</h2>
+                        <p class="text-justify">Estamos localizados em Porto Velho, na Avenida Governador Jorge Teixeira 3146 Setor - Industrial,
+                            Porto Velho - RO, 76821-002, um local que simboliza o nosso compromisso com a comunidade e a
+                            inovação. A proximidade com instituições educacionais e tecnológicas reforça nossa determinação
+                            em integrar o conhecimento técnico ao nosso modelo de negócios, trazendo soluções eficientes e
+                            modernas para o mercado.</p>
+            
+                        <hr class="my-4">
+                        <h2 class="section-title">Nossos Fundadores</h2>
+                        <p class="text-justify"><strong>Jônatas e Kléber</strong> são desenvolvedores de software que decidiram aplicar suas
+                            experiências e habilidades no setor alimentício. Com um espírito empreendedor e uma visão clara
+                            de futuro, eles têm liderado a JK Atacadista para se tornar um nome confiável no mercado
+                            atacadista.</p>
+                        <hr class="my-4">
+                        <h2 class="section-title">Compromisso com a Qualidade</h2>
+                        <p class="text-justify spaced-bottom">Na JK Atacadista, estamos comprometidos em oferecer produtos alimentícios que atendam aos mais
+                            rigorosos padrões de qualidade e segurança. Nossa equipe trabalha incansavelmente para garantir
+                            que cada produto em nosso portfólio passe por um processo de seleção criterioso e atenda às
+                            expectativas de nossos clientes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

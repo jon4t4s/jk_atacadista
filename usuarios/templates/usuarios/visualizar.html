@@ -4,6 +4,12 @@
 
 {% block titulo %}Visualizar Notas{% endblock %}
 
+{% if error_message %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ error_message }}
+    </div>
+{% endif %}
+
 {% block conteudo %}
 <h3>Visualização de notas registradas</h3>
 <hr>

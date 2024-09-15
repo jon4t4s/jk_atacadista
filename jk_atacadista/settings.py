@@ -12,8 +12,21 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os
 from pathlib import Path
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+from pathlib import Path
+
+# Defina BASE_DIR como um objeto Path
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 # Quick-start development settings - unsuitable for production
@@ -37,7 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'usuarios.apps.UsuariosConfig' #CONFIGURANDO O CAMINHO PARA MEU APP NA PASTA USUÁRIOS, POR PADRÃO NÃO VEM DEFINIDO 
+    'usuarios.apps.UsuariosConfig', #CONFIGURANDO O CAMINHO PARA MEU APP NA PASTA USUÁRIOS, POR PADRÃO NÃO VEM DEFINIDO 
 ]
     
 
@@ -53,11 +66,15 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'jk_atacadista.urls'
 
+# settings.py
+
+
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],  # Diretório para templates compartilhados
+        'APP_DIRS': True,  # Permite que o Django procure templates dentro dos diretórios dos aplicativos
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -69,18 +86,13 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'jk_atacadista.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
 
 
 # Password validation
@@ -119,9 +131,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIS = [
-    os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
 ]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

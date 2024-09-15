@@ -1,1 +1,27 @@
 {% extends 'usuarios/base.html' %}
+<!-- Responsive navbar-->
+{% block navbar %}
+<!-- Responsive navbar-->
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color:  #ff0000;">
+    <div class="container px-5">
+        <a class="navbar-brand" href="{% url 'home' %}">JK ATACADISTA</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'home' %}">Página Inicial</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'sobre' %}">Sobre</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'contato' %}">Contato</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% if error_message %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ error_message }}
+    </div>
+{% endif %}

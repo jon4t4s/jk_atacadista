@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib import messages
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
@@ -19,11 +20,12 @@ def login(request):
             login_django(request, user)
             return render(request, 'usuarios/home.html')
         else:
-            return HttpResponse('E-mail ou senha inválidos!')
+            return render(request, 'usuarios/login.html', {'error_message': 'E-mail ou senha inválidos!'})
 
 def cadastro(request):
     if request.method == "GET":
         return render(request, 'usuarios/cadastro.html')
+        
     else:
         username = request.POST.get('email')
         email = request.POST.get('email')
@@ -33,25 +35,25 @@ def cadastro(request):
         user = User.objects.filter(username=username).first()
 
         if user:
-            return HttpResponse("Usuário já existente!")
+            return render(request, 'usuarios/login.html', {'error_message': 'Usuário já existente!'})
         else:
             user = User.objects.create_user(username=username, email=email, password=password, first_name=first_name)
             user.save()
-
+            messages.success(request, 'Cadastro realizado com sucesso!')
             return render(request, 'usuarios/login.html')
 
 def home(request):
     if request.user.is_authenticated:
         return render(request, 'usuarios/home.html')
     else:
-        return HttpResponse("Faça o login para acessar!")
+        return render(request, 'usuarios/login.html', {'error_message': 'Você não acessou sua conta ainda!'})
 
 def lancar(request):
     if request.method == "GET":
         if request.user.is_authenticated:
             return render(request, 'usuarios/lancar.html')
         else:
-            return HttpResponse("Faça o login para acessar!")
+            return render(request, 'usuarios/login.html', {'error_message': 'Você não acessou sua conta ainda!'})
     else:
         nota = Nota()
         nota.nome_aluno = request.user.first_name
@@ -64,7 +66,7 @@ def lancar(request):
         nota_verificada = Nota.objects.filter(disciplina=nota.disciplina).first()
 
         if nota_verificada:
-            return HttpResponse("Disciplina já possui notas cadastradas!")
+            return render({'error_message': 'Disciplina já possui notas cadastradas!'})
         else:
             nota.save()
             return render(request, 'usuarios/home.html')
@@ -76,7 +78,7 @@ def alterar(request):
             dicionario_notas = {'lista_notas': lista_notas}
             return render(request, 'usuarios/alterar.html', dicionario_notas)
         else:
-            return HttpResponse("Faça o login para acessar!")
+            return render(request, 'usuarios/login.html', {'error_message': 'Você não acessou sua conta ainda!'})
 
 def excluir_verificacao(request, pk):
     if request.method == "GET":
@@ -85,7 +87,7 @@ def excluir_verificacao(request, pk):
             dicionario_notas = {'lista_notas': lista_notas}
             return render(request, 'usuarios/excluir.html', dicionario_notas)
         else:
-            return HttpResponse("Faça o login para acessar!")
+            return render(request, 'usuarios/login.html', {'error_message': 'Você não acessou sua conta ainda!'})
 
 def editar_verificacao(request, pk):
     if request.method == "GET":
@@ -94,7 +96,7 @@ def editar_verificacao(request, pk):
             dicionario_notas = {'lista_notas': lista_notas}
             return render(request, 'usuarios/editar.html', dicionario_notas)
         else:
-            return HttpResponse("Faça o login para acessar!")
+            return render(request, 'usuarios/login.html', {'error_message': 'Você não acessou sua conta ainda!'})
 
 def excluir(request, pk):
     if request.method == "GET":
@@ -103,7 +105,7 @@ def excluir(request, pk):
             disciplina_selecionada.delete()
             return HttpResponseRedirect(reverse('alterar'))
         else:
-            return HttpResponse("Faça o login para acessar!")
+            return render(request, 'usuarios/login.html', {'error_message': 'Você não acessou sua conta ainda!'})
 
 def editar(request, pk):
     if request.method == "POST":
@@ -124,7 +126,7 @@ def editar(request, pk):
             )
             return HttpResponseRedirect(reverse("alterar"))
         else:
-            return HttpResponse("Faça o login para acessar!")
+            return render(request, 'usuarios/login.html', {'error_message': 'Você não acessou sua conta ainda!'})
 
 def visualizar(request):
     if request.method == "GET":
@@ -133,7 +135,7 @@ def visualizar(request):
             dicionario_notas = {'lista_notas': lista_notas}
             return render(request, 'usuarios/visualizar.html', dicionario_notas)
         else:
-            return HttpResponse("Faça o login para acessar!")
+            return render(request, 'usuarios/login.html', {'error_message': 'Você não acessou sua conta ainda!'})
     else:
         disciplina = request.POST.get('disciplina')
         if disciplina == "Todas as disciplinas":
@@ -150,4 +152,28 @@ def logout(request):
         logout_django(request)
         return render(request, 'usuarios/login.html')
     else:
-        return HttpResponse("Você não acessou sua conta ainda!")
+        return render(request, 'usuarios/login.html', {'error_message': 'Você não acessou sua conta ainda!'})
+
+
+def sobre(request):
+    if request.user.is_authenticated:
+        return render(request, 'usuarios/sobre.html')
+    else:
+        return render(request, 'usuarios/login.html', {'error_message': 'Você não acessou sua conta ainda!'})
+    
+def contato(request):
+    if request.method == "GET":
+        return render(request, 'usuarios/contato.html')
+    else:
+        if request.user.is_authenticated:
+            nome = request.POST.get('nome', '')
+            email = request.POST.get('email', '')
+            mensagem = request.POST.get('mensagem', '')
+            mensagem = "Nome: " + (nome or '') + " | Email: " + (email or '') + " | Mensagem: " + (mensagem or '')
+            messages.success(request, 'Formulário Enviado')
+            return render(request, 'usuarios/contato.html')
+        
+        else:
+            return render(request, 'usuarios/login.html', {'error_message': 'Você não acessou sua conta ainda!'})   
+    
+    
