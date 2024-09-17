@@ -1,8 +1,8 @@
 {% extends 'usuarios/base.html' %}
 
-{% block aba %}Visualizar Notas{% endblock %}
+{% block aba %}Visualização{% endblock %}
 
-{% block titulo %}Visualizar Notas{% endblock %}
+{% block titulo %}Visualização{% endblock %}
 
 {% if error_message %}
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -11,16 +11,16 @@
 {% endif %}
 
 {% block conteudo %}
-<h3>Visualização de notas registradas</h3>
+<h3>Visualização de itens registrados</h3>
 <hr>
 <form action="{% url 'visualizar' %}" method="POST">
     {% csrf_token %}
     <div class="filter">
-        <label for="disciplinaName">Filtrar por Disciplina:</label>
+        <label for="disciplinaName">Filtrar por Item:</label>
         <select name="disciplina">
-            <option>Todas as disciplinas</option>
-            {% for campo in lista_notas %}
-            <option>{{ campo.disciplina }}</option>
+            <option>Todos</option>
+            {% for campo in lista_itens %}
+            <option>{{ campo.item }}</option>
             {% endfor %}
         </select>
         <button type="submit" class="btn btn-primary">Filtrar</button>
@@ -30,21 +30,21 @@
 <div class="table-responsive">
     <table class="table table-striped">
         <tr>
-            <th>Aluno</th>
-            <th>Disciplina</th>
-            <th>Nota das Atividades</th>
-            <th>Nota do Trabalho</th>
-            <th>Nota da Prova</th>
-            <th>Média</th>
+            <th>Itens cadastrado</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
         </tr>
-        {% for campo in lista_notas %}
+        {% for campo in lista_itens %}
         <tr>
-            <td>{{ user.first_name }}</td>
-            <td>{{ campo.disciplina }}</td>
-            <td>{{ campo.nota_atividades }}</td>
-            <td>{{ campo.nota_trabalho }}</td>
-            <td>{{ campo.nota_prova }}</td>
-            <td>{{ campo.media }}</td>
+            <td>{{ user.first_item }}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
         </tr>
         {% empty %}
         <tr>

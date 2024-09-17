@@ -22,28 +22,42 @@
     </div>
     <div class="form-register">
         <label for="disciplinaName">Disciplina:</label>
-        <input type="text" id="disciplina" name="disciplina" value="{{ lista_notas.disciplina }}">
+        <input type="text" id="disciplina" name="disciplina" value="{{ item }}">
     </div>
-    <div class="form-register">
-        <label for="notaAtividades">Nota das Atividades:</label>
-        <input type="text" id="notaAtividades" name="nota_atividades" value="{{ lista_notas.nota_atividades }}">
-    </div>
-    <div class="form-register">
-        <label for="notaTrabalho">Nota do Trabalho:</label>
-        <input type="text" id="notaTrabalho" name="nota_trabalho" value="{{ lista_notas.nota_trabalho }}">
-    </div>
-    <div class="form-register">
-        <label for="notaProva">Nota da Prova:</label>
-        <input type="text" id="notaProva" name="nota_prova" value="{{ lista_notas.nota_prova }}">
-    </div>
-
     <div class="update">
         <button type="submit" class="btn btn-success btn-sm">Atualizar</button>
         <a href="{% url 'alterar' %}" class="btn btn-danger btn-sm">Voltar</a>
 
     </div>
-
-
-
 </form>
+
+<style>
+    form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50%; /* Ajuste a largura conforme necessário */
+    margin: 0 auto; /* Centraliza o formulário horizontalmente */
+    padding: 20px;
+    background-color: #f9f9f9; /* Cor de fundo do formulário */
+    border: 1px solid #ccc; /* Borda do formulário */
+}
+
+.form-register {
+    margin-bottom: 15px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-register label {
+    margin-right: 10px;
+}
+
+input[type="text"] {
+    flex: 1;
+}
+
+</style>
 {% endblock %}

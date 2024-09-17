@@ -1,8 +1,8 @@
 {% extends 'usuarios/base.html' %}
 
-{% block aba %}Lançar Notas{% endblock %}
+{% block aba %}Criar lista{% endblock %}
 
-{% block titulo %}Lançar Notas{% endblock %}
+{% block titulo %}Criar lista{% endblock %}
 
 {% if error_message %}
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -11,32 +11,51 @@
 {% endif %}
 
 {% block conteudo %}
-<h3>Cadastro de Notas</h3>
-<p class="lead">Preencha todas as informações.</p>
+<h2>Criação de lista</h2>
+<p class="lead">Preencha o campo.</p>
 <hr>
-<form action="{% url 'lancar' %}" method="POST">
+
+<form action="{% url 'lancar' %}" method="POST"> <!--EDITEI O FORMUALRIO, DEIXANDO APEANS UM CAMPO-->
     {% csrf_token %}
     <div class="form-register">
-        <label for="userName">Nome:</label>
-        <label for="Name" style="font-weight:bold;">{{ user.first_name }}</label>
+        <!--<label for="userName">Nome:</label>
+        <label for="Name" style="font-weight:bold;">{{ user.first_name }}</label>-->
     </div>
     <div class="form-register">
-        <label for="disciplinaName">Disciplina:</label>
-        <input type="text" id="disciplinaName" name="disciplina">
+        <label for="item">Item: </label>
+        <input type="text" id="itemaName" name="item">
     </div>
-    <div class="form-register">
-        <label for="notaAtividades">Nota das Atividades:</label>
-        <input type="text" id="notaAtividades" name="nota_atividades">
-    </div>
-    <div class="form-register">
-        <label for="notaTrabalho">Nota do Trabalho:</label>
-        <input type="text" id="notaTrabalho" name="nota_trabalho">
-    </div>
-    <div class="form-register">
-        <label for="notaProva">Nota da Prova:</label>
-        <input type="text" id="notaProva" name="nota_prova">
-    </div>
-    <button type="submit" class="btn btn-primary">Registrar Notas</button>
+    <button type="submit" class="btn btn-success btn-sm">Salvar</button>
 
-</form>
+</form> <!--EDITEI O FORMUALRIO, DEIXANDO APEANS UM CAMPO-->
+
+<style>
+    form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50%; /* Ajuste a largura conforme necessário */
+    margin: 0 auto; /* Centraliza o formulário horizontalmente */
+    padding: 20px;
+    background-color: #f9f9f9; /* Cor de fundo do formulário */
+    border: 1px solid #ccc; /* Borda do formulário */
+}
+
+.form-register {
+    margin-bottom: 15px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-register label {
+    margin-right: 10px;
+}
+
+input[type="text"] {
+    flex: 1;
+}
+
+</style>
 {% endblock %}

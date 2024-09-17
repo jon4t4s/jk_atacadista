@@ -4,8 +4,10 @@ from django.http.response import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as login_django, logout as logout_django
-from .models import Nota
+from .models import Item
 from django.urls import reverse
+
+#####################################################################################################################################################################
 
 def login(request):
     if request.method == "GET":
@@ -22,6 +24,8 @@ def login(request):
         else:
             return render(request, 'usuarios/login.html', {'error_message': 'E-mail ou senha inválidos!'})
 
+#####################################################################################################################################################################
+
 def cadastro(request):
     if request.method == "GET":
         return render(request, 'usuarios/cadastro.html')
@@ -35,18 +39,22 @@ def cadastro(request):
         user = User.objects.filter(username=username).first()
 
         if user:
-            return render(request, 'usuarios/login.html', {'error_message': 'Usuário já existente!'})
+            return render(request, 'usuarios/cadastro.html', {'error_message': 'Usuário já existente!'})
         else:
             user = User.objects.create_user(username=username, email=email, password=password, first_name=first_name)
             user.save()
             messages.success(request, 'Cadastro realizado com sucesso!')
-            return render(request, 'usuarios/login.html')
+            return render(request, 'usuarios/cadastro.html')
+
+#####################################################################################################################################################################
 
 def home(request):
     if request.user.is_authenticated:
         return render(request, 'usuarios/home.html')
     else:
         return render(request, 'usuarios/login.html', {'error_message': 'Você não acessou sua conta ainda!'})
+
+#####################################################################################################################################################################
 
 def lancar(request):
     if request.method == "GET":
@@ -55,97 +63,99 @@ def lancar(request):
         else:
             return render(request, 'usuarios/login.html', {'error_message': 'Você não acessou sua conta ainda!'})
     else:
-        nota = Nota()
-        nota.nome_aluno = request.user.first_name
-        nota.disciplina = request.POST.get('disciplina')
-        nota.nota_atividades = request.POST.get('nota_atividades')
-        nota.nota_trabalho = request.POST.get('nota_trabalho')
-        nota.nota_prova = request.POST.get('nota_prova')
-        nota.media = int(nota.nota_atividades) + int(nota.nota_trabalho) + int(nota.nota_prova)
+        item = Item()
+        item.nome_aluno = request.user.first_name
+        item.item = request.POST.get('item')
 
-        nota_verificada = Nota.objects.filter(disciplina=nota.disciplina).first()
+        item_verificada = Item.objects.filter(item=item).first()
 
-        if nota_verificada:
-            return render({'error_message': 'Disciplina já possui notas cadastradas!'})
+        if item_verificada:
+            return render(request, 'usuarios/lancar.html', {'error_message': 'Item já cadastrado!'})
         else:
-            nota.save()
-            return render(request, 'usuarios/home.html')
+            item.save()
+            return render(request, 'usuarios/home.html') #------EDITEI O DEF LANCAR, APAGEUI TUDO QUE A GENTE NÃO IA USAR, DEIXANDO APENAS 0 BASICO------#
 
+#####################################################################################################################################################################
+#Aqui não aprece tbm
 def alterar(request):
     if request.method == "GET":
         if request.user.is_authenticated:
-            lista_notas = Nota.objects.all()
-            dicionario_notas = {'lista_notas': lista_notas}
-            return render(request, 'usuarios/alterar.html', dicionario_notas)
+            lista_itens = Item.objects.all()
+            dicionario_itens = {'lista_itens': lista_itens}
+            return render(request, 'usuarios/alterar.html', dicionario_itens)
         else:
             return render(request, 'usuarios/login.html', {'error_message': 'Você não acessou sua conta ainda!'})
+
+#####################################################################################################################################################################
 
 def excluir_verificacao(request, pk):
     if request.method == "GET":
         if request.user.is_authenticated:
-            lista_notas = Nota.objects.get(pk=pk)
-            dicionario_notas = {'lista_notas': lista_notas}
-            return render(request, 'usuarios/excluir.html', dicionario_notas)
+            lista_itens = Item.objects.get(pk=pk)
+            dicionario_itens = {'lista_itens': lista_itens}
+            return render(request, 'usuarios/excluir.html', dicionario_itens)
         else:
             return render(request, 'usuarios/login.html', {'error_message': 'Você não acessou sua conta ainda!'})
+
+#####################################################################################################################################################################
 
 def editar_verificacao(request, pk):
     if request.method == "GET":
         if request.user.is_authenticated:
-            lista_notas = Nota.objects.get(pk=pk)
-            dicionario_notas = {'lista_notas': lista_notas}
-            return render(request, 'usuarios/editar.html', dicionario_notas)
+            lista_itens = Item.objects.get(pk=pk)
+            dicionario_itens = {'lista_itens': lista_itens}
+            return render(request, 'usuarios/editar.html', dicionario_itens)
         else:
             return render(request, 'usuarios/login.html', {'error_message': 'Você não acessou sua conta ainda!'})
+
+#####################################################################################################################################################################
 
 def excluir(request, pk):
     if request.method == "GET":
         if request.user.is_authenticated:
-            disciplina_selecionada = Nota.objects.get(pk=pk)
+            disciplina_selecionada = Item.objects.get(pk=pk)
             disciplina_selecionada.delete()
             return HttpResponseRedirect(reverse('alterar'))
         else:
             return render(request, 'usuarios/login.html', {'error_message': 'Você não acessou sua conta ainda!'})
 
+#####################################################################################################################################################################
+
 def editar(request, pk):
     if request.method == "POST":
         if request.user.is_authenticated:
             nome_aluno = request.user.first_name
-            disciplina = request.POST.get('disciplina')
-            nota_atividades = request.POST.get('nota_atividades')
-            nota_trabalho = request.POST.get('nota_trabalho')
-            nota_prova = request.POST.get('nota_prova')
-            media = int(nota_atividades) + int(nota_trabalho) + int(nota_prova)
-            Nota.objects.filter(pk=pk).update(
+            item = request.POST.get('item')
+            Item.objects.filter(pk=pk).update(
                 nome_aluno=nome_aluno,
-                disciplina=disciplina,
-                nota_atividades=nota_atividades,
-                nota_trabalho=nota_trabalho,
-                nota_prova=nota_prova,
-                media=media
+                item=item,
             )
             return HttpResponseRedirect(reverse("alterar"))
         else:
             return render(request, 'usuarios/login.html', {'error_message': 'Você não acessou sua conta ainda!'})
 
+#####################################################################################################################################################################
+
 def visualizar(request):
     if request.method == "GET":
         if request.user.is_authenticated:
-            lista_notas = Nota.objects.all()
-            dicionario_notas = {'lista_notas': lista_notas}
-            return render(request, 'usuarios/visualizar.html', dicionario_notas)
+            lista_item = Item.objects.all()
+            dicionario_item = {'lista_item': lista_item}
+            return render(request, 'usuarios/visualizar.html', dicionario_item)
         else:
             return render(request, 'usuarios/login.html', {'error_message': 'Você não acessou sua conta ainda!'})
     else:
-        disciplina = request.POST.get('disciplina')
-        if disciplina == "Todas as disciplinas":
-            lista_notas = Nota.objects.all()
-            dicionario_notas = {'lista_notas': lista_notas}
-            return render(request, 'usuarios/visualizar.html', dicionario_notas)
+        item = request.POST.get('item')
+        if item == "Todos os itens":
+            lista_item = Item.objects.all()
+            dicionario_item = {'lista_item': lista_item}
+            return render(request, 'usuarios/visualizar.html', dicionario_item)
         else:
-            lista_notas = Nota.objects.filter(disciplina=disciplina)
-            dicionario_notas_filtradas = {"lista_notas": lista_notas}
-            return render(request, 'usuarios/visualizar.html', dicionario_notas_filtradas)
+            lista_item = Item.objects.filter(item=item)
+            dicionario_item_filtradas = {"lista_item": lista_item}
+            return render(request, 'usuarios/visualizar.html', dicionario_item_filtradas)
+
+#####################################################################################################################################################################
 
 def logout(request):
     if request.user.is_authenticated:
@@ -154,13 +164,15 @@ def logout(request):
     else:
         return render(request, 'usuarios/login.html', {'error_message': 'Você não acessou sua conta ainda!'})
 
+#####################################################################################################################################################################
 
 def sobre(request):
     if request.user.is_authenticated:
         return render(request, 'usuarios/sobre.html')
     else:
         return render(request, 'usuarios/login.html', {'error_message': 'Você não acessou sua conta ainda!'})
-    
+
+#####################################################################################################################################################################
 def contato(request):
     if request.method == "GET":
         return render(request, 'usuarios/contato.html')
@@ -175,5 +187,3 @@ def contato(request):
         
         else:
             return render(request, 'usuarios/login.html', {'error_message': 'Você não acessou sua conta ainda!'})   
-    
-    

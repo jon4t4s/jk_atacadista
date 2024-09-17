@@ -15,6 +15,7 @@
         {{ error_message }}
     </div>
 {% endif %}
+
 {% if messages %}
     <div class="container mt-3">
         {% for message in messages %}
@@ -24,6 +25,7 @@
         {% endfor %}
     </div>
 {% endif %}
+
 <div class="card-body">
     <form action="{% url 'cadastro' %}" method="POST">
         {% csrf_token %}
@@ -37,7 +39,11 @@
             <input type="password" class="form-control" id="password" placeholder="Senha" name="senha" required>
         </div>
         <div class="d-grid">
-            <button class="btn btn-primary btn-light text-uppercase fw-bold  custom-hover type="submit">Cadastrar-se</button>
+            <button class="btn btn-primary btn-light text-uppercase fw-bold  custom-hover" type="submit">Cadastrar-se</button><!--teste-->
+        </div>
+        <hr class="my-4">
+        <div class="d-grid">
+            <a href="{% url 'login' %}" class="btn btn-primary btn-light text-uppercase fw-bold  custom-hover" type="submit">Login</a>
         </div>
     </form>
 </div>
