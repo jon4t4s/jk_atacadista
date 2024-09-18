@@ -4,18 +4,31 @@
 
 {% block titulo %}Excluir Notas{% endblock %}
 
+
+
+{% block conteudo %}
+
 {% if error_message %}
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
         {{ error_message }}
     </div>
 {% endif %}
 
-{% block conteudo %}
-<h3>Exclusão da Nota Selecionada</h3>
+{% if messages %}
+    <div class="container mt-3">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<h3>Exclusão do Item Selecionado</h3>
 <hr>
-<p>Tem certeza que deseja excluir as notas da disciplina <strong>{{ lista_notas.disciplina }}</strong>?</p>
+<p>Tem certeza que deseja excluir o item: <strong>{{ lista_item.item }}</strong>?</p>
 <div class="delete">
-    <a href="{% url 'excluir' lista_notas.pk %}" class="btn btn-success btn-sm">Sim</a>
+    <a href="{% url 'excluir' lista_item.pk %}" class="btn btn-success btn-sm">Sim</a>
     <a href="{% url 'alterar' %}" class="btn btn-danger btn-sm">Não</a>
 </div>
 {% endblock %}

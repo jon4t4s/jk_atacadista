@@ -10,26 +10,17 @@
     </div>
 {% endif %}
 
-{% block conteudo %}
-<h3>Edição do Item selecionado</h3>
-<p class="lead">Verifique as informações cadastradas e faça as devidas edições.</p>
-<hr>
-<form action="{% url 'editar' lista_item.pk %}" method="POST">
-    {% csrf_token %}
-    <div class="form-register">
-        <label for="userName">Nome:</label>
-        <label for="Name" style="font-weight:bold;">{{ user.first_name }}</label>
+{% if messages %}
+    <div class="container mt-3">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
     </div>
-    <div class="form-register">
-        <label for="itemaName">Item:</label>
-        <input type="text" id="itemaName" name="item" value="{{ lista_item.item }}">
-    </div>
-    <div class="update">
-        <button type="submit" class="btn btn-success btn-sm">Atualizar</button>
-        <a href="{% url 'alterar' %}" class="btn btn-danger btn-sm">Voltar</a>
-    </div>
-</form>
+{% endif %}
 
+{% block conteudo %}
 <style>
     form {
     display: flex;
@@ -59,4 +50,20 @@ input[type="text"] {
 }
 
 </style>
+
+<h3>Edição do Item selecionado</h3>
+<p class="lead">Verifique as informações cadastradas e faça as devidas edições.</p>
+<hr>
+<form action="{% url 'editar' lista_item.pk %}" method="POST">
+    {% csrf_token %}
+    <div class="form-register">
+        <label for="itemaName">Item:</label>
+        <input type="text" id="itemaName" name="item" value="{{ lista_item.item }}">
+    </div>
+    <div class="update">
+        <button type="submit" class="btn btn-success btn-sm">Atualizar</button>
+        <a href="{% url 'alterar' %}" class="btn btn-danger btn-sm">Voltar</a>
+    </div>
+</form>
+
 {% endblock %}

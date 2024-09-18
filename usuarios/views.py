@@ -64,25 +64,26 @@ def lancar(request):
             return render(request, 'usuarios/login.html', {'error_message': 'Você não acessou sua conta ainda!'})
     else:
         item = Item()
-        item.nome_aluno = request.user.first_name
+        item.nome = request.user.first_name
         item.item = request.POST.get('item')
 
-        item_verificada = Item.objects.filter(item=item).first()
+        item_verificado = Item.objects.filter(item = item).first()
 
-        if item_verificada:
+        if item_verificado:
             return render(request, 'usuarios/lancar.html', {'error_message': 'Item já cadastrado!'})
         else:
             item.save()
-            return render(request, 'usuarios/home.html') #------EDITEI O DEF LANCAR, APAGEUI TUDO QUE A GENTE NÃO IA USAR, DEIXANDO APENAS 0 BASICO------#
+            messages.success(request, 'Item adicionado com sucesso!')
+            return render(request, 'usuarios/lancar.html') #------EDITEI O DEF LANCAR, APAGEUI TUDO QUE A GENTE NÃO IA USAR, DEIXANDO APENAS 0 BASICO------#
 
 #####################################################################################################################################################################
 #Aqui não aprece tbm
 def alterar(request):
     if request.method == "GET":
         if request.user.is_authenticated:
-            lista_itens = Item.objects.all()
-            dicionario_itens = {'lista_itens': lista_itens}
-            return render(request, 'usuarios/alterar.html', dicionario_itens)
+            lista_item = Item.objects.all()
+            dicionario_item = {'lista_item': lista_item}
+            return render(request, 'usuarios/alterar.html', dicionario_item)
         else:
             return render(request, 'usuarios/login.html', {'error_message': 'Você não acessou sua conta ainda!'})
 
@@ -91,9 +92,9 @@ def alterar(request):
 def excluir_verificacao(request, pk):
     if request.method == "GET":
         if request.user.is_authenticated:
-            lista_itens = Item.objects.get(pk=pk)
-            dicionario_itens = {'lista_itens': lista_itens}
-            return render(request, 'usuarios/excluir.html', dicionario_itens)
+            lista_item = Item.objects.get(pk=pk)
+            dicionario_item = {'lista_item': lista_item}
+            return render(request, 'usuarios/excluir.html', dicionario_item)
         else:
             return render(request, 'usuarios/login.html', {'error_message': 'Você não acessou sua conta ainda!'})
 
@@ -102,9 +103,10 @@ def excluir_verificacao(request, pk):
 def editar_verificacao(request, pk):
     if request.method == "GET":
         if request.user.is_authenticated:
-            lista_itens = Item.objects.get(pk=pk)
-            dicionario_itens = {'lista_itens': lista_itens}
-            return render(request, 'usuarios/editar.html', dicionario_itens)
+            lista_item = Item.objects.get(pk=pk)
+            dicionario_item = {'lista_item':lista_item}
+            messages.success(request, 'Item Alterado com sucesso!')
+            return render(request, 'usuarios/editar.html', dicionario_item)
         else:
             return render(request, 'usuarios/login.html', {'error_message': 'Você não acessou sua conta ainda!'})
 
@@ -115,6 +117,7 @@ def excluir(request, pk):
         if request.user.is_authenticated:
             disciplina_selecionada = Item.objects.get(pk=pk)
             disciplina_selecionada.delete()
+            messages.success(request, 'Item excluído sucesso!')
             return HttpResponseRedirect(reverse('alterar'))
         else:
             return render(request, 'usuarios/login.html', {'error_message': 'Você não acessou sua conta ainda!'})
@@ -124,13 +127,9 @@ def excluir(request, pk):
 def editar(request, pk):
     if request.method == "POST":
         if request.user.is_authenticated:
-            nome_aluno = request.user.first_name
             item = request.POST.get('item')
-            Item.objects.filter(pk=pk).update(
-                nome_aluno=nome_aluno,
-                item=item,
-            )
-            return HttpResponseRedirect(reverse("alterar"))
+            Item.objects.filter(pk=pk).update(item = item)
+            return HttpResponseRedirect(reverse('alterar'))
         else:
             return render(request, 'usuarios/login.html', {'error_message': 'Você não acessou sua conta ainda!'})
 

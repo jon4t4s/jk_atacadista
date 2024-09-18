@@ -4,13 +4,23 @@
 
 {% block titulo %}Edição{% endblock %}
 
+{% block conteudo %}
 {% if error_message %}
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
         {{ error_message }}
     </div>
 {% endif %}
 
-{% block conteudo %}
+{% if messages %}
+    <div class="container mt-3">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
 <h3>Edição ou exclusão de itens</h3>
 <hr>
 

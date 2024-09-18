@@ -4,30 +4,22 @@
 
 {% block titulo %}Criar lista{% endblock %}
 
+{% block conteudo %}
 {% if error_message %}
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
         {{ error_message }}
     </div>
 {% endif %}
 
-{% block conteudo %}
-<h2>Criação de lista</h2>
-<p class="lead">Preencha o campo.</p>
-<hr>
-
-<form action="{% url 'lancar' %}" method="POST"> <!--EDITEI O FORMUALRIO, DEIXANDO APEANS UM CAMPO-->
-    {% csrf_token %}
-    <div class="form-register">
-        <!--<label for="userName">Nome:</label>
-        <label for="Name" style="font-weight:bold;">{{ user.first_name }}</label>-->
+{% if messages %}
+    <div class="container mt-3">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
     </div>
-    <div class="form-register">
-        <label for="itemaName">Item: </label>
-        <input type="text" id="itemaName" name="item">
-    </div>
-    <button type="submit" class="btn btn-success btn-sm">Salvar</button>
-
-</form> <!--EDITEI O FORMUALRIO, DEIXANDO APEANS UM CAMPO-->
+{% endif %}
 
 <style>
     form {
@@ -58,4 +50,22 @@ input[type="text"] {
 }
 
 </style>
+
+<h2>Criação de lista</h2>
+<p class="lead">Preencha o campo.</p>
+<hr>
+
+<form action="{% url 'lancar' %}" method="POST"> <!--EDITEI O FORMUALRIO, DEIXANDO APEANS UM CAMPO-->
+    {% csrf_token %}
+    <!--<div class="form-register">
+        <label for="userName">Nome:</label>
+        <label for="Name" style="font-weight:bold;">{{ user.first_name }}</label>
+    </div>-->
+    <div class="form-register">
+        <label for="itemaName">Item: </label>
+        <input type="text" id="itemaName" name="item">
+    </div>
+    <button type="submit" class="btn btn-success btn-sm">Salvar</button>
+
+</form> <!--EDITEI O FORMUALRIO, DEIXANDO APEANS UM CAMPO-->
 {% endblock %}
