@@ -15,4 +15,5 @@ urlpatterns = [
     path('editar_verificacao/<int:pk>', views.editar_verificacao, name = "editar_verificacao"),
     path('editar/<int:pk>', views.editar, name = 'editar'),
     path('sobre/', views.sobre, name = 'sobre'),
+    path('perfil/', views.perfil, name = 'perfil'),
 ]

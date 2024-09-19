@@ -67,7 +67,7 @@ def lancar(request):
         item.nome = request.user.first_name
         item.item = request.POST.get('item')
 
-        item_verificado = Item.objects.filter(item = item).first()
+        item_verificado = Item.objects.filter(item = item.item).first()
 
         if item_verificado:
             return render(request, 'usuarios/lancar.html', {'error_message': 'Item já cadastrado!'})
@@ -77,7 +77,7 @@ def lancar(request):
             return render(request, 'usuarios/lancar.html') #------EDITEI O DEF LANCAR, APAGEUI TUDO QUE A GENTE NÃO IA USAR, DEIXANDO APENAS 0 BASICO------#
 
 #####################################################################################################################################################################
-#Aqui não aprece tbm
+
 def alterar(request):
     if request.method == "GET":
         if request.user.is_authenticated:
@@ -172,6 +172,15 @@ def sobre(request):
         return render(request, 'usuarios/login.html', {'error_message': 'Você não acessou sua conta ainda!'})
 
 #####################################################################################################################################################################
+
+def perfil(request):
+    if request.user.is_authenticated:
+        return render(request, 'usuarios/perfil.html')
+    else:
+        return render(request, 'usuarios/.html', {'error_message': 'Você não acessou sua conta ainda!'})
+
+#####################################################################################################################################################################
+
 def contato(request):
     if request.method == "GET":
         return render(request, 'usuarios/contato.html')
